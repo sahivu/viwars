@@ -10,8 +10,12 @@ module.exports = function(ws, req) {
     const send = msg=>ws.send(JSON.stringify(msg));//helpfull alias
 
     ws.on('message', function(_msgblob) {
-        const msg = JSON.parse(_msgblob);
-        send(msg);//for example we returns what requested
+        try{
+            const msg = JSON.parse(_msgblob);
+            send(msg);//for example we returns what requested
+        } catch(e) {
+            send({error:e});
+        }
     });
     ws.on('close', function() {
         //?
