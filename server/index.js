@@ -21,7 +21,9 @@ const staticContentPath = `${__dirname}/../${process.env.STATIC_FILES_PATH}`
 //???
 //???
 //???
-
+// где тут фронт?
+// то что в папке server -- сервер, всё остально фронт
+// js/EntryPoint фронт, скрипт что запускается первым
 
 // express app initializations and starting
 //  someutilities
