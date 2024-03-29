@@ -16,12 +16,18 @@ export const FCPromise = ()=>{
 }
 
 
+/** Простое событие */
 export class SimpleEventProvider {
     constructor() {
         const EventListeners = []
+        /** Подписка на событие */
         const subsrcibe = (CB)=>EventListeners.push(CB);
+        /** Подписка на событие @type {(CB:Function)=>{}} */
         subsrcibe.subsrcibe = subsrcibe
+        /** Оповещение о событии */
         subsrcibe.send = (...args)=>EventListeners.map(CB=>CB?.(...args));
+        /** Оповещение о событии */
+        subscribe.fire = subscribe.send;
         return subsrcibe;
     }
 }
