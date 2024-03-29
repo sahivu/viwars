@@ -21,4 +21,11 @@ import { RoomInfo } from "./modules/BoardConstants.js";
 // мы вот кдпишем но не чекали ещё что он рабочий, запуль пока что есть, потом наверно я пробегусь по багам и очепятка
                 // я со вчера не спал, так что я наверно отключась
                         // Ок
-var game = new GameProvider(new RoomInfo());// <<
+const Players = [new TPlayer(1, 'Garet', 'X'), new TPlayer(1, 'Froggis', 'O')]
+var game = new GameProvider(new RoomInfo({
+                            Players
+                          }), new GameStateSnapshot({
+                            Table: range(10).map(x=>range(10)
+                                        .map(y=>new slotinfo()))
+                            ActivePlayerID, 
+                          }));
