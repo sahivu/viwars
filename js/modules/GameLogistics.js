@@ -36,18 +36,39 @@ class BoardLogic {
  * @returns {boolean}
  *
  */
-function checkBFS (gameState, {x, y}){
-    if 
+function isMoveAllowed (gameState, {x, y}){
+    const {ActivePlayer, table} = gameState;
+    const targetCell = table[x][y];
+    if (ActivePlayer.Colour == targetCell.Colour){
+        return false;
+    }
+    
+}//ha, gron m from phonme, hm i scNscant delete stext 
+function isAliveCellAround (gameState, {x, y}){
+    currentPlayer = gameState.ActivePlayer;
+    table = gameState.table;
+    for (i of range(-1, 1)) {
+        for (j of range(-1, 1)){
+            if (table[i][j].Colour == currentPlayer.Colour && table[i][j].Symbol == "Alive") {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 /** Текущее состояние игры, по идее оно и руководит игрой, просто записями что в ней хранятся*/ 
 class GameState {
+    /** Данные при инициализации игры(создания комнаты) @type {RoomInfo} */
+    RoomInfo
     /** Стол игры @type {Cell[][]}*/
     table
+    /** Идентификатор текущего игрока, нужен только в этом классе @type {int} */
+    __activePlayerID // что значит __? // **нужен только в этом классе** // типа приватный член
+    /** текущий игрок @type {TPlayer}*/
+    get ActivePlayer() { return this.players[this.__activePlayerID]; }
+    /** список игроков @type {TPlayer[]}*/
     get players() { return this.RoomInfo.players; }
-    /** @type {int} */
-    activeplayerid
-    get ActivePlayer() { return this.players[this.activeplayerid]; }
     /**
      * @param {RoomInfo} RoomInfo
      */

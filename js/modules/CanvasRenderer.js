@@ -1,5 +1,5 @@
 import { range, SimpleEventProvider } from './Utilities.js'
-import { RoomInfo } from './BoardConstants.js'
+import { RoomInfo, TPlayer } from './BoardConstants.js'
 
 const width = document.body.clientWitdth
 const height = document.body.clientHeight
@@ -64,10 +64,9 @@ class Cell {
         const cellRect = new fabric.Rect({
             width:size, height:size, 
             fill: 'white',
-            originX: 'center',
-            originY: 'center'
+            originX: 'center', originY: 'center'
         });
-        this.content = new fabric.Group(staticObj({
+        this.content = new fabric.Group([cellRect], staticObj({
             left, top, 
             width:size, height:size, 
         }, true));
@@ -77,6 +76,13 @@ class Cell {
         this.content.addWithUpdate(obj);
     }
 }
+/**
+ * @callback tryMoveCB
+ * @param {int} x
+ * @param {int} y
+ * @returns {TPLayer} Player which step
+ */
+/** */
 export class BoardCanvas {
     /** событие при клике на одну из клеток */
     onClick = new SimpleEventProvider()
@@ -86,6 +92,7 @@ export class BoardCanvas {
         this.canvas.setWidth(size);
         this.canvas.setHeight(size); 
         this.Table = range(RoomInfo.sizeofTable.x).map(x=>range(RoomInfo.sizeofTable.y).map(y=>[]))
+        /** @type {{tryMove:tryMoveCB}} */
         this.gc = {tryMove};
 
         this.InitTable(RoomInfo);
@@ -111,8 +118,8 @@ export class BoardCanvas {
                     const result = this.gc.tryMove(x,y);
                     if(!result) return;
                     const {Symbol, Colour} = result;
-                    const SymbolLabel = new fabric.Text(Symbol, {
-                        fill: Colour,
+                    const SymbolLabel = new fabric.Text(result.Symbol, {
+                        fill: Colour.htmlCode,
                     });
                     cell.appendObj(SymbolLabel);
                     this.canvas.renderAll()

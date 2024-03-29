@@ -1,7 +1,12 @@
 export const BoardConstants = { //=D
     // здесь будут будущие наши константы
 }
-
+export class TCRColour {
+    /** @type {int} */
+    id
+    /** @type {string} */
+    htmlcode
+}
 export class TPlayer {
     /** @type {string} */
     username
@@ -9,7 +14,7 @@ export class TPlayer {
     Symbol
     /** @type {string} */
     SymbolImageSrc
-    /** @type {*} */
+    /** @type {TCRColour} */
     Colour
 }
 export class Cell { 
@@ -30,6 +35,7 @@ class sizeOfTableRecord {
     get width() {return this.x }
     get height() {return this.y }
 }
+/** Информация об изначальных данных для создания игры */
 export class RoomInfo { // да и зачем нам дефолты, по идее размеры нам сервер будет сообщать // Я думал это информация от пользователя, какой размер доски
     /** @type {sizeOfTableRecord} */
     sizeOfTable
