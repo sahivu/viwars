@@ -13,7 +13,7 @@ Router.get('/ping', (req, res, next)=>{//Accesible only by method GET in HTTP
         next(e)
     }
 })
-Router.get('/webping', (req, res)=>{//for access http://127.0.0.1:5002/api/webping from browser
+Router.get('/webping', (req, res)=>{//for access as plaintext
     res.write('hello');
     res.end();
 })
