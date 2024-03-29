@@ -31,10 +31,13 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 //  our routers
-app.use('/', express.static(staticContentPath)) // share static files
 app.use('/api', apiSample) // dyn actions
 app.ws("/ws", wsSample); // ws connection
 app.use(require('./api/middlewares/errorMiddlewareSample.js')) // errors handler
+app.use('/ping', (req, res, next)=>{//Accesible only by method GET in HTTP
+    res.send('pong')
+})
+// app.use('/', express.static(staticContentPath)) // share static files
 
 //server starts here: 
 app.listen(process.env.SERVER_PORT, () =>

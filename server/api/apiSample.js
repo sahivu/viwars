@@ -6,14 +6,14 @@ const Router = new express.Router();
 Router.use(bodyParser.json());
 
 // ping pong sample
-Router.get('ping', (req, res, next)=>{//Accesible only by method GET in HTTP
+Router.get('/ping', (req, res, next)=>{//Accesible only by method GET in HTTP
     try {
         return res.json({ ping:'pong' })
     } catch(e) {
         next(e)
     }
 })
-Router.get('webping', (req, res)=>{//for access http://127.0.0.1:5002/api/webping from browser
+Router.get('/webping', (req, res)=>{//for access http://127.0.0.1:5002/api/webping from browser
     res.write('hello');
     res.end();
 })
