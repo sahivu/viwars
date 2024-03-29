@@ -1,8 +1,9 @@
 const express = require('express');
 const checkBodyMiddleware = require('./middlewares/Sample/checkBodyMiddleware');
-const TRouter = express.Router;
+const bodyParser = require('body-parser');
 /** @type {express.Router} */
-const Router = new TRouter();
+const Router = new express.Router();
+Router.use(bodyParser.json());
 
 // ping pong sample
 Router.get('ping', (req, res, next)=>{//Accesible only by method GET in HTTP
@@ -12,13 +13,9 @@ Router.get('ping', (req, res, next)=>{//Accesible only by method GET in HTTP
         next(e)
     }
 })
-Router.use('webping', (req, res, next)=>{//for access http://127.0.0.1:5002/api/webping from browser
-    try {
-        res.set('Content-Type', 'text/html');
-        return res.send(Buffer.from('pong'));
-    } catch(e) {
-        next(e)
-    }
+Router.get('webping', (req, res)=>{//for access http://127.0.0.1:5002/api/webping from browser
+    res.write('hello');
+    res.end();
 })
 
 
