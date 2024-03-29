@@ -4,20 +4,24 @@ export const BoardConstants = { //=D
 export class TCRColour {
     /** @type {int} */
     id
-    /** @type {string} */
+    /** example '#0bf392' @type {string} */
     htmlcode
 }
 export class TPlayer {
     /** @type {string} */
     username
-    /** @type {string} */ // символ это что, типа тип клетки? (пустая клетка, клетка, сеть и т.д.) // символ это типа крестик/нолик и другие гендеры // тогда почему строка, если это по идее изображение //ну ээ, временно, пока проще так наверно, потом легко переделаем
+    /** Знак игрока, крестик, ножик, треугольник или например даже крюк@type {string} */ 
     Symbol
     /** @type {string} */
     SymbolImageSrc
     /** @type {TCRColour} */
     Colour
 }
-export class Cell { 
+export class Cell {
+    /** человек который установил здесь вирус @type {TPlayer} */
+    Virus
+    /** игрок который установил здесь свою цепочку @type {TPlayer} */
+    Chain
     constructor(x, y) {
         /** @type {int} */
         this.x = x;
