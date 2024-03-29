@@ -17,7 +17,7 @@ Router.get('ping', (req, res, next)=>{
 
 
 // middleware Sample // as sample return request Body
-Router.get('echo', checkBodyMiddleware, (req, res, next)=>{
+Router.post('echo', checkBodyMiddleware, (req, res, next)=>{
     try {
         return res.json({ echo: req.body })
     } catch(e) {
