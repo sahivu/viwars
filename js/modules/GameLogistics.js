@@ -44,13 +44,24 @@ function isMoveAllowed (gameState, {x, y}){
     }
     
 }//ha, gron m from phonme, hm i scNscant delete stext 
+
+/**
+ * 
+ * @param {GameState} gameState 
+ * @param {{x:int, y:int}} param1 
+ * @returns 
+ */
 function isAliveCellAround (gameState, {x, y}){
     currentPlayer = gameState.ActivePlayer;
     table = gameState.table;
+    roomX = gameState.RoomInfo.sizeOfTable.x;
+    roomY = gameState.RoomInfo.sizeOfTable.y
     for (i of range(-1, 1)) {
         for (j of range(-1, 1)){
-            if (table[i][j].Colour == currentPlayer.Colour && table[i][j].Symbol == "Alive") {
-                return true;
+            if (!(i < 0 || j < 0 || x + i > roomX || y + j > roomY)){
+                if (table[x+i][y+j].Colour == currentPlayer.Colour && table[x+i][y+j].Symbol == "Alive") {
+                    return true;
+                }
             }
         }
     }
