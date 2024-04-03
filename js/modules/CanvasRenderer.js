@@ -2,6 +2,7 @@ import { range, SimpleEventProvider } from './Utilities/Utilities.js'
 import { RoomInfo, TPlayer } from './HelpersNComponents/BoardConstants.js'
 import { CanvasFunctions, CanvasObject, CanvasSymbols } from './Utilities/CanvasFunctions.js'
 import { VirusWarsTable } from './HelpersNComponents/CanvasTable.js'
+import { GameProvider } from './GameLogistics.js'
 
 // import { _fabric } from 'fabric' // in code editing this should comment
 /** @alias _fabric */
@@ -35,16 +36,19 @@ export class BoardCanvas extends CanvasFunctions {
     onClick = new SimpleEventProvider()
 
 
-    /** @param {RoomInfo} RoomInfo */ 
-    constructor(RoomInfo, {tryMove}) { 
+    /** 
+     * @param {RoomInfo} RoomInfo
+     * @param {GameProvider} gc
+     */ 
+    constructor(RoomInfo, gc) { 
         super('GameCanvas')
         const {canvas} = this;
         this.canvas.setWidth(size);
         this.canvas.setHeight(size);
 
         /** @type {{tryMove:tryMoveCB}} */
-        this.gc = {tryMove};
-
+        this.gc = gc;
+        /** @type {VirusWarsTable} */
         this.Table = new VirusWarsTable(canvas, RoomInfo.sizeOfTable.x, 
                                                 RoomInfo.sizeOfTable.y, [], this.gc)
     }

@@ -1,6 +1,6 @@
 import { BoardCanvas } from "./modules/CanvasRenderer.js";
 import { GameProvider } from "./modules/GameLogistics.js";
-import { RoomInfo, TPlayer } from "./modules/HelpersNComponents/BoardConstants.js";
+import { RoomInfo, TCRColour, TPlayer } from "./modules/HelpersNComponents/BoardConstants.js";
 import { GameStateSnapshot } from "./modules/Scrap0/main.js";
 
 // Так, GameState с CanvasRender связали +
@@ -22,9 +22,9 @@ import { GameStateSnapshot } from "./modules/Scrap0/main.js";
 // мы вот кдпишем но не чекали ещё что он рабочий, запуль пока что есть, потом наверно я пробегусь по багам и очепятка
                 // я со вчера не спал, так что я наверно отключась
                         // Ок
-const Players = [new TPlayer(1, 'Garet', 'X'), new TPlayer(1, 'Froggis', 'O')]
+const players = [new TPlayer('Garet', 'X', '', TCRColour.RED), new TPlayer('Froggis', 'O', '', TCRColour.BLUE)]
 
 
 export var game = new GameProvider(new RoomInfo({
-                            Players
+                            players
                           }), GameStateSnapshot.default([10, 10]));

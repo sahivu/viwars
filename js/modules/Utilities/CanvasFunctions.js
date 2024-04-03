@@ -14,7 +14,7 @@ export class CanvasObject {
 export class CanvasFunctions {
     /** @type {CanvasComponent[]} */
     Components = []
-    /** @type {_fabric.Canvas} */
+    /** @type {fabric.Canvas} */
     canvas
 
 

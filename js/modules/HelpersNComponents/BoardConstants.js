@@ -5,7 +5,13 @@ export class TCRColour {
     /** @type {int} */
     id
     /** example '#0bf392' @type {string} */
-    htmlcode
+    htmlCode
+    constructor(id, htmlCode) {
+        this.id = id;
+        this.htmlCode = htmlCode
+    }
+    static RED = new TCRColour(0, '#663399')
+    static BLUE = new TCRColour(0, '#006400')
 }
 export class TPlayer {
     /** @type {string} */
@@ -16,6 +22,12 @@ export class TPlayer {
     SymbolImageSrc
     /** @type {TCRColour} */
     Colour
+    constructor(username, Symbol, SymbolImageSrc, Colour) {
+        this.username = username;
+        this.Symbol = Symbol;
+        this.SymbolImageSrc = SymbolImageSrc;
+        this.Colour = Colour;
+    }
 }
 export class Cell {
     /** человек который установил здесь вирус @type {TPlayer} */

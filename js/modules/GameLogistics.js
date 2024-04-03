@@ -23,10 +23,18 @@ class BoardLogic {
      * @param {GameState} GameState
      * @param {int} x
      * @param {int} y
-     * @returns {boolean} if Move acceptable returns true else false
+     * @returns {false|'Virus'|'Chain'} if Move acceptable returns true else false
      */
     tryMove(GameState, x, y) {
-        return false;
+        const {table, ActivePlayer} = GameState;
+        const Cell = table[x][y];
+        if(!Cell.Virus) {
+            Cell.Virus = ActivePlayer;
+            return 'Virus';
+        } else if(!Cell.Chain) {
+            Cell.Chain = ActivePlayer;
+            return 'Chain';
+        } else return false;
     }
 }
 
@@ -77,7 +85,7 @@ export class GameState {
     /** Стол игры @type {TableType}*/
     table
     /** Идентификатор текущего игрока, нужен только в этом классе @type {int} */
-    __activePlayerID // что значит __? // **нужен только в этом классе** // типа приватный член
+    __activePlayerID = 0
     /** текущий игрок @type {TPlayer}*/
     get ActivePlayer() { return this.players[this.__activePlayerID]; }
     /** список игроков @type {TPlayer[]}*/
@@ -87,11 +95,21 @@ export class GameState {
      */
     constructor(RoomInfo) {
         const {sizeOfTable} = RoomInfo;
-        this.table = range(sizeOfTable.y).map(x=>range(sizeOfTable.x).map(y=>new Cell(x, y)))
+        this.table = range(sizeOfTable.y).map(x=>range(sizeOfTable.x).map(y=>new Cell(x, y)));
+        this.RoomInfo = RoomInfo
     }
     static Snapshot = GameStateSnapshot
 }
-
+export class providemethods {
+    constructor({Board, GameState, GameCanvas}) {
+        this.GameProvider = GameProvider;
+    }
+    tryMove(x,y) {
+        const result = this.Board.tryMove(this.GameState, x, y);
+        if(!result) return;
+        return [this.GameState.ActivePlayer, result.type]
+    }
+}
 /** посредник между Канвасом, Логикой и Сетевой частями приложения */
 export class GameProvider {
     /**
@@ -100,9 +118,13 @@ export class GameProvider {
      */
     constructor(RoomInfo, GameStateSnapshot) {
         this.GameState = new GameState(RoomInfo);
-        this.GameCanvas = new BoardCanvas(RoomInfo, {
-            tryMove:(x,y)=>this.Board.tryMove(this.GameState, x, y)&&this.GameState.ActivePlayer,
-        });
+        this.GameCanvas = new BoardCanvas(RoomInfo, this);
         this.Board = new BoardLogic();
+    }
+    /** @returns {[TPlayer, 'Chain'|'Virus']|undefined} */
+    tryMove(x, y){
+        const result = this.Board.tryMove(this.GameState, x, y);
+        if(!result) return;
+        return [this.GameState.ActivePlayer, result]
     }
 }
