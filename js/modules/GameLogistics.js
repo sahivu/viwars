@@ -100,16 +100,6 @@ export class GameState {
     }
     static Snapshot = GameStateSnapshot
 }
-export class providemethods {
-    constructor({Board, GameState, GameCanvas}) {
-        this.GameProvider = GameProvider;
-    }
-    tryMove(x,y) {
-        const result = this.Board.tryMove(this.GameState, x, y);
-        if(!result) return;
-        return [this.GameState.ActivePlayer, result.type]
-    }
-}
 /** посредник между Канвасом, Логикой и Сетевой частями приложения */
 export class GameProvider {
     /**
@@ -118,13 +108,20 @@ export class GameProvider {
      */
     constructor(RoomInfo, GameStateSnapshot) {
         this.GameState = new GameState(RoomInfo);
-        this.GameCanvas = new BoardCanvas(RoomInfo, this);
+        this.GameCanvas = new BoardCanvas(RoomInfo, this.shareds);
         this.Board = new BoardLogic();
     }
-    /** @returns {[TPlayer, 'Chain'|'Virus']|undefined} */
-    tryMove(x, y){
-        const result = this.Board.tryMove(this.GameState, x, y);
-        if(!result) return;
-        return [this.GameState.ActivePlayer, result]
+
+    /** Функции для сообщения между `Логикой`, `Канвасом` и `GameState` */
+    shareds = new GameProvider.__sharedsT(this);
+    static __sharedsT = class __sharedsT{
+        constructor(GameProvider) {
+            /** @returns {[TPlayer, 'Chain'|'Virus']|undefined} */
+            this.tryMove = (x, y)=>{
+                const result = GameProvider.Board.tryMove(GameProvider.GameState, x, y);
+                if(!result) return;
+                return [GameProvider.GameState.ActivePlayer, result];
+            }
+        }
     }
 }

@@ -123,7 +123,7 @@ export class VirusWarsTable {
      * @param {int} width 
      * @param {int} height 
      * @param {{x:int, y:int, Virus, Chain}[]} InitVals 
-     * @param {GameProvider} gc
+     * @param {GameProvider.__sharedsT} gc
      */
     constructor(canvas, width, height, InitVals=[], gc) {
         /** space between cells*/

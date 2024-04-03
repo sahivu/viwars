@@ -38,7 +38,7 @@ export class BoardCanvas extends CanvasFunctions {
 
     /** 
      * @param {RoomInfo} RoomInfo
-     * @param {GameProvider} gc
+     * @param {GameProvider.__sharedsT} gc
      */ 
     constructor(RoomInfo, gc) { 
         super('GameCanvas')
