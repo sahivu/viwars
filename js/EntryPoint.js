@@ -23,6 +23,8 @@ import { GameStateSnapshot } from "./modules/Scrap0/main.js";
                 // я со вчера не спал, так что я наверно отключась
                         // Ок
 const Players = [new TPlayer(1, 'Garet', 'X'), new TPlayer(1, 'Froggis', 'O')]
-var game = new GameProvider(new RoomInfo({
+
+
+export var game = new GameProvider(new RoomInfo({
                             Players
                           }), GameStateSnapshot.default([10, 10]));

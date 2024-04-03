@@ -2,6 +2,7 @@
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 /** @returns {int[]} */
 export const range = (from, len) => len?range(len).map(x => x + from):[...Array(from).keys()];
+export const range2D = (fLen, sLen) => ({map:CB=>range(fLen).map(x=>range(sLen).map(y=>CB(x,y)))});
 const __getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 export const getRandomInt = (min, max) => __getRandomInt(Math.ceil(min), Math.floor(max));
 
