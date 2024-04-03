@@ -36,19 +36,23 @@ class sizeOfTableRecord {
         /** @type {int} */
         this.y = y;
     }
+    static copy(value) {
+        if(value instanceof sizeOfTableRecord) return value;
+        return new sizeOfTableRecord(value.x, value.y)
+    }
     get width() {return this.x }
     get height() {return this.y }
 }
 /** Информация об изначальных данных для создания игры */
 export class RoomInfo { // да и зачем нам дефолты, по идее размеры нам сервер будет сообщать // Я думал это информация от пользователя, какой размер доски
     /** @type {sizeOfTableRecord} */
-    sizeOfTable
+    sizeOfTable = new sizeOfTableRecord(10, 10);
     /** @type {TPlayers[]} */
     players = []
-    /** @param {RoomInfo||undefined} RoomInfo */
+    /** @param {RoomInfo} RoomInfo */
     constructor(RoomInfo = {}) {
-        for(const [key, vlaue] of RoomInfo) {
-            if(key === 'sizeOfTable') this.sizeOfTable = new sizeOfTableRecord(value)
+        for(const [key, value] of Object.entries(RoomInfo)) {
+            if(key === 'sizeOfTable') this.sizeOfTable = sizeOfTableRecord.copy(value)
             else this[key] = value
         }
     }

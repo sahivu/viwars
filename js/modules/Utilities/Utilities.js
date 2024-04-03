@@ -1,5 +1,6 @@
 
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+/** @returns {int[]} */
 export const range = (from, len) => len?range(len).map(x => x + from):[...Array(from).keys()];
 const __getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 export const getRandomInt = (min, max) => __getRandomInt(Math.ceil(min), Math.floor(max));
@@ -27,7 +28,7 @@ export class SimpleEventProvider {
         /** Оповещение о событии */
         subsrcibe.send = (...args)=>EventListeners.map(CB=>CB?.(...args));
         /** Оповещение о событии */
-        subscribe.fire = subscribe.send;
+        subsrcibe.fire = subsrcibe.send;
         return subsrcibe;
     }
 }

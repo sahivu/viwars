@@ -1,6 +1,7 @@
 import { BoardCanvas } from "./modules/CanvasRenderer.js";
 import { GameProvider } from "./modules/GameLogistics.js";
-import { RoomInfo } from "./modules/BoardConstants.js";
+import { RoomInfo, TPlayer } from "./modules/HelpersNComponents/BoardConstants.js";
+import { GameStateSnapshot } from "./modules/Scrap0/main.js";
 
 // Так, GameState с CanvasRender связали +
 // Клики от пользователя сделаны +
@@ -24,8 +25,4 @@ import { RoomInfo } from "./modules/BoardConstants.js";
 const Players = [new TPlayer(1, 'Garet', 'X'), new TPlayer(1, 'Froggis', 'O')]
 var game = new GameProvider(new RoomInfo({
                             Players
-                          }), new GameStateSnapshot({
-                            Table: range(10).map(x=>range(10)
-                                        .map(y=>new slotinfo())),
-                            ActivePlayerID: 0, 
-                          }));
+                          }), GameStateSnapshot.default([10, 10]));

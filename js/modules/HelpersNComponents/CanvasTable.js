@@ -1,4 +1,3 @@
-import { fabric } from 'fabric'
 
 
 export class VirusWarsTable {

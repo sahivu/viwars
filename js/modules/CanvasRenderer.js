@@ -1,7 +1,10 @@
 import { range, SimpleEventProvider } from './Utilities/Utilities.js'
-import { RoomInfo, TPlayer } from './BoardConstants.js'
+import { RoomInfo, TPlayer } from './HelpersNComponents/BoardConstants.js'
 import { CanvasFunctions, CanvasObject, CanvasSymbols } from './Utilities/CanvasFunctions.js'
-import { fabric } from 'fabric'
+
+// import { _fabric } from 'fabric' // in code editing this should comment
+/** @alias _fabric */
+fabric
 
 const width = document.body.clientWitdth
 const height = document.body.clientHeight

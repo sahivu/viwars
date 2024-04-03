@@ -1,7 +1,8 @@
-import { fabric } from 'fabric'
-
+// import { _fabric } from 'fabric'
+/** @alias _fabric */
+fabric
 export const CanvasSymbols = {
-    Drawable: new Symbol('Drawable')
+    Drawable: Symbol('Drawable')
 }
 export class CanvasComponent {};
 export class CanvasObject {
@@ -13,7 +14,7 @@ export class CanvasObject {
 export class CanvasFunctions {
     /** @type {CanvasComponent[]} */
     Components = []
-    /** @type {fabric.Canvas} */
+    /** @type {_fabric.Canvas} */
     canvas
 
 

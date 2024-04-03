@@ -1,5 +1,6 @@
 import { BoardCanvas } from './CanvasRenderer.js';
-import { BoardConstants, Cell, TPlayer, RoomInfo } from './BoardConstants.js';
+import { BoardConstants, Cell, TPlayer, RoomInfo } from './HelpersNComponents/BoardConstants.js';
+import { GameStateSnapshot } from './Scrap0/main.js';
 import { range, SimpleEventProvider } from './Utilities/Utilities.js'
 
 // Логика получает клик от пользоватя на клетку
@@ -67,12 +68,13 @@ function isAliveCellAround (gameState, {x, y}){
     }
     return false;
 }
-
+/** @typedef {Cell[][]} TableType */
+/** @typedef {slotinfo[][]} TableInfoType */
 /** Текущее состояние игры, по идее оно и руководит игрой, просто записями что в ней хранятся*/ 
-class GameState {
+export class GameState {
     /** Данные при инициализации игры(создания комнаты) @type {RoomInfo} */
     RoomInfo
-    /** Стол игры @type {Cell[][]}*/
+    /** Стол игры @type {TableType}*/
     table
     /** Идентификатор текущего игрока, нужен только в этом классе @type {int} */
     __activePlayerID // что значит __? // **нужен только в этом классе** // типа приватный член
@@ -85,16 +87,18 @@ class GameState {
      */
     constructor(RoomInfo) {
         const {sizeOfTable} = RoomInfo;
-        table = range(sizeOfTable.y).map(x=>range(sizeOfTable.x).map(y=>new Cell(x, y)))
+        this.table = range(sizeOfTable.y).map(x=>range(sizeOfTable.x).map(y=>new Cell(x, y)))
     }
+    static Snapshot = GameStateSnapshot
 }
 
 /** посредник между Канвасом, Логикой и Сетевой частями приложения */
 export class GameProvider {
     /**
      * @param {RoomInfo} RoomInfo
+     * @param {GameStateSnapshot} RoomInfo
      */
-    constructor(RoomInfo) {
+    constructor(RoomInfo, GameStateSnapshot) {
         this.GameState = new GameState(RoomInfo);
         this.GameCanvas = new BoardCanvas(RoomInfo, {
             tryMove:(x,y)=>this.Board.tryMove(this.GameState, x, y)&&this.GameState.ActivePlayer,
