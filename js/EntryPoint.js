@@ -26,6 +26,6 @@ var game = new GameProvider(new RoomInfo({
                             Players
                           }), new GameStateSnapshot({
                             Table: range(10).map(x=>range(10)
-                                        .map(y=>new slotinfo()))
-                            ActivePlayerID, 
+                                        .map(y=>new slotinfo())),
+                            ActivePlayerID: 0, 
                           }));

@@ -1,6 +1,6 @@
 import { BoardCanvas } from './CanvasRenderer.js';
 import { BoardConstants, Cell, TPlayer, RoomInfo } from './BoardConstants.js';
-import { range, SimpleEventProvider } from './Utilities.js'
+import { range, SimpleEventProvider } from './Utilities/Utilities.js'
 
 // Логика получает клик от пользоватя на клетку
 // Логика чекает корректный ли это ход

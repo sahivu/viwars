@@ -1,5 +1,7 @@
-import { range, SimpleEventProvider } from './Utilities.js'
+import { range, SimpleEventProvider } from './Utilities/Utilities.js'
 import { RoomInfo, TPlayer } from './BoardConstants.js'
+import { CanvasFunctions, CanvasObject, CanvasSymbols } from './Utilities/CanvasFunctions.js'
+import { fabric } from 'fabric'
 
 const width = document.body.clientWitdth
 const height = document.body.clientHeight
@@ -83,14 +85,18 @@ class Cell {
  * @returns {TPLayer} Player which step
  */
 /** */
-export class BoardCanvas {
+export class BoardCanvas extends CanvasFunctions {
     /** событие при клике на одну из клеток */
     onClick = new SimpleEventProvider()
+
+
     /** @param {RoomInfo} RoomInfo */ 
     constructor(RoomInfo, {tryMove}) { 
-        const canvas = this.canvas = new fabric.Canvas('GameCanvas', {backgroundColor : "#cfd095"});
+        super('GameCanvas')
+        const {canvas} = this;
         this.canvas.setWidth(size);
-        this.canvas.setHeight(size); 
+        this.canvas.setHeight(size);
+
         this.Table = range(RoomInfo.sizeofTable.x).map(x=>range(RoomInfo.sizeofTable.y).map(y=>[]))
         /** @type {{tryMove:tryMoveCB}} */
         this.gc = {tryMove};
