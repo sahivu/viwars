@@ -10,8 +10,8 @@ export class TCRColour {
         this.id = id;
         this.htmlCode = htmlCode
     }
-    static RED = new TCRColour(0, '#663399')
-    static BLUE = new TCRColour(0, '#006400')
+    static RED = new TCRColour(0, '#663399AA')
+    static BLUE = new TCRColour(0, '#006400AA')
 }
 export class TPlayer {
     /** @type {string} */
