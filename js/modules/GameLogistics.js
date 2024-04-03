@@ -30,9 +30,11 @@ class BoardLogic {
         const Cell = table[x][y];
         if(!Cell.Virus) {
             Cell.Virus = ActivePlayer;
+            GameState.moves.push({x,y});
             return 'Virus';
         } else if(!Cell.Chain) {
             Cell.Chain = ActivePlayer;
+            GameState.moves.push({x,y});
             return 'Chain';
         } else return false;
     }
@@ -90,6 +92,11 @@ export class GameState {
     get ActivePlayer() { return this.players[this.__activePlayerID]; }
     /** список игроков @type {TPlayer[]}*/
     get players() { return this.RoomInfo.players; }
+
+    /** @type {{x:int, y:int}[]} */
+    moves = [];
+
+
     /**
      * @param {RoomInfo} RoomInfo
      */
@@ -97,6 +104,13 @@ export class GameState {
         const {sizeOfTable} = RoomInfo;
         this.table = range(sizeOfTable.y).map(x=>range(sizeOfTable.x).map(y=>new Cell(x, y)));
         this.RoomInfo = RoomInfo
+    }
+    /** этот метод переделаешь, пока временного так сделал */
+    checkOnStepComplete() {
+        if(this.moves.length===3) {
+            this.__activePlayerID = [1, 0][this.__activePlayerID]; // 0->1 ; 1->0 swaps
+            this.moves = [];
+        }
     }
     static Snapshot = GameStateSnapshot
 }
@@ -115,12 +129,15 @@ export class GameProvider {
     /** Функции для сообщения между `Логикой`, `Канвасом` и `GameState` */
     shareds = new GameProvider.__sharedsT(this);
     static __sharedsT = class __sharedsT{
+        /** @param {GameProvider} GameProvider */
         constructor(GameProvider) {
             /** @returns {[TPlayer, 'Chain'|'Virus']|undefined} */
             this.tryMove = (x, y)=>{
                 const result = GameProvider.Board.tryMove(GameProvider.GameState, x, y);
                 if(!result) return;
-                return [GameProvider.GameState.ActivePlayer, result];
+                const {ActivePlayer} = GameProvider.GameState;
+                GameProvider.GameState.checkOnStepComplete();
+                return [ActivePlayer, result];
             }
         }
     }
